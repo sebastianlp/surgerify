@@ -7,7 +7,6 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
-import Link from "@material-ui/core/Link";
 import { makeStyles } from "@material-ui/core/styles";
 
 import { Formik, Form, Field } from "formik";
@@ -16,6 +15,8 @@ import * as Yup from "yup";
 import { useAuth } from "context/AuthContext";
 import { useLoader } from "context/LoaderContext";
 import { useSnackbar } from "context/SnackbarContext";
+
+import Copyright from "components/Copyright";
 
 const useStyles = makeStyles(theme => ({
   box: {
@@ -160,19 +161,6 @@ function LoginForm({ onSubmit }) {
       </Grid> */}
       {/* </form> */}
     </Formik>
-  );
-}
-
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {"Hecho con ❤️por "}
-      <Link color="inherit" href="https://github.com/sebastianlp">
-        Sebas
-      </Link>{" "}
-      {"© Surgerify "}
-      {new Date().getFullYear()}
-    </Typography>
   );
 }
 
