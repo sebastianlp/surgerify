@@ -1,5 +1,6 @@
 import React from "react";
 import clsx from "clsx";
+import { Link } from "react-router-dom";
 
 import { makeStyles } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
@@ -184,12 +185,14 @@ export default function Layout(props) {
         </List>
         <Divider />
         <List>
-          <ListItem button>
-            <ListItemIcon>
-              <LocalHospitalIcon />
-            </ListItemIcon>
-            <ListItemText primary="Cirugías" />
-          </ListItem>
+          {Links().map(link => (
+            <ListItemLink
+              key={link.key}
+              icon={link.icon}
+              primary={link.primary}
+              to={link.to}
+            />
+          ))}
         </List>
       </Drawer>
       <main className={classes.content}>
@@ -205,4 +208,34 @@ export default function Layout(props) {
       </main>
     </div>
   );
+}
+
+function ListItemLink(props) {
+  const { icon, primary, to } = props;
+
+  const renderRouterLink = React.useMemo(
+    () =>
+      React.forwardRef((linkProps, ref) => (
+        <Link ref={ref} to={to} {...linkProps} />
+      )),
+    [to]
+  );
+
+  return (
+    <ListItem button component={renderRouterLink}>
+      <ListItemIcon>{icon}</ListItemIcon>
+      <ListItemText primary={primary} />
+    </ListItem>
+  );
+}
+
+function Links() {
+  return [
+    {
+      key: "surgeries",
+      to: "/surgeries",
+      icon: <LocalHospitalIcon />,
+      primary: "Cirugías"
+    }
+  ];
 }
