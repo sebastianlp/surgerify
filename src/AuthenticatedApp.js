@@ -1,7 +1,9 @@
 import React from "react";
 
+import Layout from "components/Layout";
+
 function AuthenticatedApp() {
-  return <div>Auth app</div>;
+  return <Layout>Children</Layout>;
 }
 
 export default AuthenticatedApp;
