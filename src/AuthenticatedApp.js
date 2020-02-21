@@ -9,6 +9,7 @@ import {
 import Layout from "components/Layout";
 
 import Surgeries from "views/Surgeries";
+import NewSurgery from "views/NewSurgery";
 
 function AuthenticatedApp() {
   return (
@@ -18,9 +19,12 @@ function AuthenticatedApp() {
           <Route exact path="/">
             <Redirect to="/surgeries" />
           </Route>
-          <Route path="/surgeries">
+          <Route exact path="/surgeries">
             <Surgeries />
           </Route>
+          <Router path="/new/surgery">
+            <NewSurgery />
+          </Router>
         </Switch>
       </Layout>
     </Router>

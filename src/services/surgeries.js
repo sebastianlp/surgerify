@@ -1,0 +1,56 @@
+import firebaseApp, { getAllFromCollection, firebase } from "domain/firebase";
+
+/**
+ * Get realtime updates on surgeries collection by userId
+ * @param {string} userId
+ */
+async function getSurgeriesByUserId(userId) {
+  const snapshot = await getAllFromCollection("surgeries", {
+    field: "userId",
+    operation: "==",
+    value: userId
+  });
+
+  return snapshot.docs.map(surgeryTransformer);
+}
+
+function surgeryTransformer(surgery) {
+  return {
+    ...surgery.data(),
+    id: surgery.id
+  };
+}
+
+/**
+ * TODO: Next we will query with the userId to grab only the surgeries of that user maybe
+ */
+async function getSurgeryTypes() {
+  const snapshot = await getAllFromCollection("surgeryTypes");
+
+  return snapshot.docs.map(doc => doc.data().name);
+}
+
+/**
+ *
+ * @param surgery The surgery
+ * @param surgery.affiliate Affiliate number
+ * @param surgery.affiliateName Affiliate number
+ * @param surgery.center The location of the surgery
+ * @param surgery.date The date of the surgery
+ * @param surgery.doctor The doctor of the surgery
+ * @param surgery.social The social of the surgery (Obra social)
+ * @param surgery.surgery The type of the surgery
+ * @param surgery.userId Logged userId
+ */
+async function newSurgery(surgery) {
+  return firebaseApp
+    .firestore()
+    .collection("surgeries")
+    .add({
+      ...surgery,
+      createdAt: firebase.firestore.Timestamp.now(),
+      date: firebase.firestore.Timestamp.fromDate(surgery.date)
+    });
+}
+
+export { getSurgeriesByUserId, getSurgeryTypes, newSurgery };
