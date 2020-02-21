@@ -81,9 +81,6 @@ function UnauthenticatedApp() {
         <LoginForm onSubmit={handleLogin} />
       </Box>
       <Footer />
-      {/* <Box mt={8}>
-        <Copyright />
-      </Box> */}
     </Container>
   );
 }
@@ -112,7 +109,6 @@ function LoginForm({ onSubmit }) {
         <Form className={classes.form}>
           <Field name="email">
             {({ field, form, meta }) => {
-              console.log();
               return (
                 <TextField
                   {...field}
