@@ -16,9 +16,14 @@ import { useAuth } from "context/AuthContext";
 import { useLoader } from "context/LoaderContext";
 import { useSnackbar } from "context/SnackbarContext";
 
-import Copyright from "components/Copyright";
+import Footer from "components/Footer";
 
 const useStyles = makeStyles(theme => ({
+  mainContainer: {
+    display: "flex",
+    flexDirection: "column",
+    minHeight: "100vh"
+  },
   box: {
     marginTop: theme.spacing(8)
   },
@@ -60,7 +65,7 @@ function UnauthenticatedApp() {
   }
 
   return (
-    <Container maxWidth="xs" component="main">
+    <Container maxWidth="xs" component="main" className={classes.mainContainer}>
       <Box
         className={classes.box}
         flexDirection="column"
@@ -75,9 +80,10 @@ function UnauthenticatedApp() {
         </Typography>
         <LoginForm onSubmit={handleLogin} />
       </Box>
-      <Box mt={8}>
+      <Footer />
+      {/* <Box mt={8}>
         <Copyright />
-      </Box>
+      </Box> */}
     </Container>
   );
 }
