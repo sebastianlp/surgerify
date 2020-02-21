@@ -5,6 +5,8 @@ import dayjs from "dayjs";
 import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
+import Button from "@material-ui/core/Button";
+import GetAppIcon from "@material-ui/icons/GetApp";
 import Table from "@material-ui/core/Table";
 import TableHead from "@material-ui/core/TableHead";
 import TableCell from "@material-ui/core/TableCell";
@@ -16,6 +18,8 @@ import { useSnackbar } from "context/SnackbarContext";
 
 import { getSurgeriesByUserId } from "services/surgeries";
 
+import { generateAndDownloadFile, transformSurgery } from "domain/excel";
+
 const useStyles = makeStyles(theme => ({
   paper: {
     padding: theme.spacing(2),
@@ -23,8 +27,15 @@ const useStyles = makeStyles(theme => ({
     overflow: "auto",
     flexDirection: "column"
   },
+  paperActions: {
+    marginBottom: theme.spacing(1)
+  },
+  containerActions: {
+    display: "flex",
+    justifyContent: "flexEnd"
+  },
   tableContainer: {
-    maxHeight: 800
+    maxHeight: 644
   }
 }));
 
@@ -49,7 +60,30 @@ function Surgeries() {
   }, [user.uid, addSnackbar]);
 
   return (
-    <Grid container spacing={3}>
+    <Grid
+      container
+      spacing={3}
+      direction="column"
+      justify="space-between"
+      alignItems="stretch"
+    >
+      <Grid item xs={12}>
+        <Grid container spacing={3} justify="flex-end" alignItems="center">
+          <Grid item>
+            <Button
+              variant="contained"
+              color="secondary"
+              className={classes.button}
+              startIcon={<GetAppIcon />}
+              onClick={() =>
+                generateAndDownloadFile(surgeries.map(transformSurgery))
+              }
+            >
+              Exportar a Excel
+            </Button>
+          </Grid>
+        </Grid>
+      </Grid>
       <Grid item xs={12}>
         <Paper className={clsx(classes.paper, classes.tableContainer)}>
           <Table
