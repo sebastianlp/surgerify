@@ -3,22 +3,34 @@ import firebase from "./firebase";
 /**
  * Promisified version of the onAuthStateChanged Firebase function
  * This function provides the authenticated user or null
- * Will reject the promise is something bad happends with the Firebase function
+ * Will reject the promise if something bad happends with the Firebase function
  */
 function getUser() {
   return new Promise((resolve, reject) => {
     const unsubscribe = firebase.auth().onAuthStateChanged(user => {
       unsubscribe();
+
       if (!user) {
         return resolve(null);
       }
 
-      return resolve({
-        user: {
-          displayName: user.displayName,
-          email: user.email
-        }
-      });
+      firebase
+        .firestore()
+        .collection("users")
+        .where("email", "==", user.email)
+        .get()
+        .then(querySnapshot => {
+          const userProfile = querySnapshot.docs[0].data();
+
+          return resolve({
+            user: {
+              displayName: `${userProfile.name} ${userProfile.lastname}`,
+              email: user.email,
+              uid: userProfile.uid
+            }
+          });
+        })
+        .catch(reject);
     }, reject);
   });
 }
