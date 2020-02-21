@@ -12,8 +12,9 @@ import TableRow from "@material-ui/core/TableRow";
 import TableBody from "@material-ui/core/TableBody";
 
 import { useUser } from "context/UserContext";
+import { useSnackbar } from "context/SnackbarContext";
 
-import { getSurgeries } from "domain/surgeries";
+import { getSurgeriesByUserId } from "services/surgeries";
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -22,48 +23,35 @@ const useStyles = makeStyles(theme => ({
     overflow: "auto",
     flexDirection: "column"
   },
-  fixedHeight: {
-    color: theme.palette.common.black
-  },
   tableContainer: {
-    maxHeight: 440
+    maxHeight: 800
   }
 }));
 
 function Surgeries() {
   const classes = useStyles();
   const user = useUser();
+  const addSnackbar = useSnackbar();
   const [surgeries, setSurgeries] = React.useState([]);
 
   React.useEffect(() => {
-    const unsubscribe = getSurgeries(user.uid).onSnapshot(snapshot => {
-      const surgeriesHelp = [];
-
-      snapshot.forEach(function(doc) {
-        const surgeryInfo = doc.data();
-        const surgeryId = doc.id;
-        surgeriesHelp.push({
-          ...surgeryInfo,
-          id: surgeryId
-        });
+    getSurgeriesByUserId(user.uid)
+      .then(response => {
+        setSurgeries(response);
+      })
+      .catch(error => {
+        console.error(error);
+        addSnackbar(
+          "Ops! Ocurrió un error obteniendo las cirugías! 😔",
+          "error"
+        );
       });
-
-      setSurgeries(surgeriesHelp);
-    });
-
-    return () => unsubscribe();
-  });
+  }, [user.uid, addSnackbar]);
 
   return (
     <Grid container spacing={3}>
       <Grid item xs={12}>
-        <Paper
-          className={clsx(
-            classes.paper,
-            classes.fixedHeight,
-            classes.tableContainer
-          )}
-        >
+        <Paper className={clsx(classes.paper, classes.tableContainer)}>
           <Table
             className={classes.table}
             stickyHeader
@@ -102,7 +90,6 @@ function Surgeries() {
       </Grid>
     </Grid>
   );
-  return <div>Surgeries</div>;
 }
 
 export default Surgeries;
