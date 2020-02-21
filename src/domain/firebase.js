@@ -19,3 +19,15 @@ const firebaseConfig = {
 const app = firebase.initializeApp(firebaseConfig);
 
 export default app;
+
+function getAllFromCollection(collection, where) {
+  const fromCollection = app.firestore().collection(collection);
+
+  if (where) {
+    fromCollection.where(where.field, where.operation, where.value);
+  }
+
+  return fromCollection.get();
+}
+
+export { firebase, getAllFromCollection };
