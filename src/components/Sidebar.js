@@ -9,6 +9,7 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import LocalHospitalIcon from "@material-ui/icons/LocalHospital";
+import AddCircleIcon from "@material-ui/icons/AddCircle";
 import PersonIcon from "@material-ui/icons/Person";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import IconButton from "@material-ui/core/IconButton";
@@ -116,6 +117,12 @@ function Links() {
       to: "/surgeries",
       icon: <LocalHospitalIcon />,
       primary: "Cirugías"
+    },
+    {
+      key: "new-surgery",
+      to: "/new/surgery",
+      icon: <AddCircleIcon />,
+      primary: "Nueva cirugía"
     }
   ];
 }
