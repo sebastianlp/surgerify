@@ -20,7 +20,8 @@ import FormikAutocomplete from "components/FormikAutocomplete";
 import { getCenters } from "services/centers";
 import { getDoctors } from "services/doctors";
 import { getSocials } from "services/socials";
-import { getSurgeryTypes, newSurgery } from "services/surgeries";
+import { newSurgery } from "services/surgeries";
+import { getSurgeryTypes } from "services/surgeryTypes";
 
 import { useLoader } from "context/LoaderContext";
 import { useUser } from "context/UserContext";
@@ -121,7 +122,7 @@ function NewSurgery() {
                   <Grid item xs={12}>
                     <Field name="date">
                       {({ field, form, meta }) => (
-                        <MuiPickersUtilsProvider utils={DayjsUtils}>
+                        <MuiPickersUtilsProvider utils={DayjsUtils} locale="es">
                           <KeyboardDatePicker
                             margin="normal"
                             label="Fecha de la cirugía"

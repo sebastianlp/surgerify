@@ -5,11 +5,13 @@ import firebaseApp, { getAllFromCollection, firebase } from "domain/firebase";
  * @param {string} userId
  */
 async function getSurgeriesByUserId(userId) {
-  const snapshot = await getAllFromCollection("surgeries", {
-    field: "userId",
-    operation: "==",
-    value: userId
-  });
+  const snapshot = await getAllFromCollection("surgeries", [
+    {
+      field: "userId",
+      operation: "==",
+      value: userId
+    }
+  ]);
 
   return snapshot.docs.map(surgeryTransformer);
 }
@@ -21,13 +23,25 @@ function surgeryTransformer(surgery) {
   };
 }
 
-/**
- * TODO: Next we will query with the userId to grab only the surgeries of that user maybe
- */
-async function getSurgeryTypes() {
-  const snapshot = await getAllFromCollection("surgeryTypes");
+async function getSurgeriesByUserAndMonth(userId, month) {
+  const today = new Date();
+  const startAt = new Date(today.getFullYear(), month, 1, 0, 0, 0);
+  const endAt = new Date(today.getFullYear(), month + 1, 0, 23, 59, 59);
 
-  return snapshot.docs.map(doc => doc.data().name);
+  const userSnapshot = await firebaseApp
+    .firestore()
+    .collection("users")
+    .doc(userId)
+    .get();
+
+  const surgeriesSnapshot = await userSnapshot.ref
+    .collection("surgeries")
+    .orderBy("date")
+    .startAt(startAt)
+    .endAt(endAt)
+    .get();
+
+  return surgeriesSnapshot.docs.map(surgeryTransformer);
 }
 
 /**
@@ -45,6 +59,8 @@ async function getSurgeryTypes() {
 async function newSurgery(surgery) {
   return firebaseApp
     .firestore()
+    .collection("users")
+    .doc(surgery.userId)
     .collection("surgeries")
     .add({
       ...surgery,
@@ -53,4 +69,4 @@ async function newSurgery(surgery) {
     });
 }
 
-export { getSurgeriesByUserId, getSurgeryTypes, newSurgery };
+export { getSurgeriesByUserId, getSurgeriesByUserAndMonth, newSurgery };

@@ -40,7 +40,13 @@ function AuthProvider(props) {
     }
   }
 
-  const login = (email, password) => auth.login(email, password).then(reload);
+  const login = (email, password) =>
+    auth
+      .login(email, password)
+      .then(reload)
+      .catch(e => {
+        throw e;
+      });
   const logout = () => auth.logout().then(reload);
 
   return <AuthContext.Provider value={{ data, login, logout }} {...props} />;

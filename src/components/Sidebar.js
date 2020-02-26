@@ -73,7 +73,7 @@ function Sidebar(props) {
           <ListItemIcon>
             <PersonIcon />
           </ListItemIcon>
-          <ListItemText primary={`Hola ${user.displayName}!`} />
+          <ListItemText primary={user.displayName} />
         </ListItem>
       </List>
       <Divider />

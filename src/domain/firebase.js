@@ -23,8 +23,10 @@ export default app;
 function getAllFromCollection(collection, where) {
   const fromCollection = app.firestore().collection(collection);
 
-  if (where) {
-    fromCollection.where(where.field, where.operation, where.value);
+  if (where && where.lenght > 0) {
+    where.forEach(({ field, operation, value }) => {
+      fromCollection.where(field, operation, value);
+    });
   }
 
   return fromCollection.get();

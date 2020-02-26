@@ -5,20 +5,21 @@ import Container from "@material-ui/core/Container";
 
 import Header from "./Header";
 import Sidebar from "./Sidebar";
-import Footer from "./Footer";
 
 const useStyles = makeStyles(theme => ({
   root: {
     display: "flex"
   },
-  appBarSpacer: theme.mixins.toolbar,
-  wrapper: {
-    display: "flex",
-    flexDirection: "column",
-    minHeight: "100vh",
-    flexGrow: 1
+  appBarSpacer: {
+    ...theme.mixins.toolbar,
+    marginBottom: theme.spacing(2)
   },
-  mainContainer: {
+  main: {
+    flexGrow: 1,
+    height: "100vh",
+    overflow: "auto"
+  },
+  container: {
     paddingTop: theme.spacing(4),
     paddingBottom: theme.spacing(4)
   }
@@ -38,15 +39,12 @@ export default function Layout(props) {
     <div className={classes.root}>
       <Header open={open} onDrawerCloseIconClick={handleDrawerOpen} />
       <Sidebar open={open} onDrawerCloseIconClick={handleDrawerClose} />
-      <div className={classes.wrapper}>
-        <main>
-          <div className={classes.appBarSpacer} />
-          <Container maxWidth="xl" className={classes.mainContainer}>
-            {props.children}
-          </Container>
-        </main>
-        <Footer />
-      </div>
+      <main className={classes.main}>
+        <div className={classes.appBarSpacer} />
+        <Container maxWidth="xl" className={classes.container}>
+          {props.children}
+        </Container>
+      </main>
     </div>
   );
 }

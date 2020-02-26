@@ -17,20 +17,24 @@ function getUser() {
       firebase
         .firestore()
         .collection("users")
-        .where("email", "==", user.email)
+        .doc(user.uid)
         .get()
-        .then(querySnapshot => {
-          const userProfile = querySnapshot.docs[0].data();
+        .then(documentSnapshot => {
+          const userProfile = documentSnapshot.data();
 
           return resolve({
             user: {
-              displayName: `${userProfile.name} ${userProfile.lastname}`,
+              displayName: userProfile.displayName,
               email: user.email,
-              uid: userProfile.uid
+              uid: user.uid
             }
           });
         })
-        .catch(reject);
+        .catch(e => {
+          logout();
+          console.error(e);
+          reject(e);
+        });
     }, reject);
   });
 }

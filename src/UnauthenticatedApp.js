@@ -100,7 +100,7 @@ function LoginForm({ onSubmit }) {
       initialValues={{ email: "", password: "" }}
       validationSchema={SignupSchema}
       onSubmit={(values, { setSubmitting }) => {
-        onSubmit(values).catch(() => {
+        onSubmit(values).catch(e => {
           setSubmitting(false);
         });
       }}
