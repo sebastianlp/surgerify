@@ -1,43 +1,43 @@
-import React from "react";
-import clsx from "clsx";
-import * as Yup from "yup";
-import { Formik, Form, Field } from "formik";
-import DayjsUtils from "@date-io/dayjs";
-import dayjs from "dayjs";
+import React from 'react';
+import clsx from 'clsx';
+import * as Yup from 'yup';
+import { Formik, Form, Field } from 'formik';
+import DayjsUtils from '@date-io/dayjs';
+import dayjs from 'dayjs';
 
-import { makeStyles } from "@material-ui/core/styles";
-import Grid from "@material-ui/core/Grid";
-import Paper from "@material-ui/core/Paper";
-import TextField from "@material-ui/core/TextField";
-import Button from "@material-ui/core/Button";
+import { makeStyles } from '@material-ui/core/styles';
+import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
 import {
   MuiPickersUtilsProvider,
-  KeyboardDatePicker
-} from "@material-ui/pickers";
+  KeyboardDatePicker,
+} from '@material-ui/pickers';
 
-import FormikAutocomplete from "components/FormikAutocomplete";
+import FormikAutocomplete from 'components/FormikAutocomplete';
 
-import { getCenters } from "services/centers";
-import { getDoctors } from "services/doctors";
-import { getSocials } from "services/socials";
-import { newSurgery } from "services/surgeries";
-import { getSurgeryTypes } from "services/surgeryTypes";
+import { getCenters } from 'services/centers';
+import { getDoctors } from 'services/doctors';
+import { getSocials } from 'services/socials';
+import { newSurgery } from 'services/surgeries';
+import { getSurgeryTypes } from 'services/surgeryTypes';
 
-import { useLoader } from "context/LoaderContext";
-import { useUser } from "context/UserContext";
-import { useSnackbar } from "context/SnackbarContext";
+import { useLoader } from 'context/LoaderContext';
+import { useUser } from 'context/UserContext';
+import { useSnackbar } from 'context/SnackbarContext';
 
 const useStyles = makeStyles(theme => ({
   paper: {
     padding: theme.spacing(2),
-    display: "flex",
-    overflow: "auto",
-    flexDirection: "column"
+    display: 'flex',
+    overflow: 'auto',
+    flexDirection: 'column',
   },
   buttons: {
-    display: "flex",
-    justifyContent: "flex-end"
-  }
+    display: 'flex',
+    justifyContent: 'flex-end',
+  },
 }));
 
 function NewSurgery() {
@@ -74,22 +74,22 @@ function NewSurgery() {
         <Paper className={clsx(classes.paper, classes.tableContainer)}>
           <Formik
             initialValues={{
-              affiliate: "",
-              affiliateName: "",
-              center: "",
+              affiliate: '',
+              affiliateName: '',
+              center: '',
               date: dayjs(),
-              doctor: "",
-              social: "",
-              surgery: ""
+              doctor: '',
+              social: '',
+              surgery: '',
             }}
             validationSchema={Yup.object({
-              affiliate: Yup.string().required("Requerido"),
-              affiliateName: Yup.string().required("Requerido"),
-              center: Yup.string().required("Requerido"),
-              date: Yup.date().required("Requerido"),
-              doctor: Yup.string().required("Requerido"),
-              social: Yup.string().required("Requerido"),
-              surgery: Yup.string().required("Requerido")
+              affiliate: Yup.string().required('Requerido'),
+              affiliateName: Yup.string().required('Requerido'),
+              center: Yup.string().required('Requerido'),
+              date: Yup.date().required('Requerido'),
+              doctor: Yup.string().required('Requerido'),
+              social: Yup.string().required('Requerido'),
+              surgery: Yup.string().required('Requerido'),
             })}
             onSubmit={(values, { setSubmitting, resetForm }) => {
               showLoader(true);
@@ -97,25 +97,24 @@ function NewSurgery() {
               newSurgery({
                 ...values,
                 date: new Date(values.date.toDate()),
-                userId: user.uid
+                userId: user.uid,
               })
                 .then(resp => {
                   resetForm();
-                  addSnackbar("Cirugía guardad con éxito", "success");
+                  addSnackbar('Cirugía guardad con éxito', 'success');
                 })
                 .catch(err => {
                   console.error(err);
                   addSnackbar(
-                    "Ops! Ocurrió un error guardando la cirugía! 😔",
-                    "error"
+                    'Ops! Ocurrió un error guardando la cirugía! 😔',
+                    'error'
                   );
                 })
                 .finally(() => {
                   showLoader(false);
                   setSubmitting(false);
                 });
-            }}
-          >
+            }}>
             {({ isSubmitting }) => (
               <Form>
                 <Grid container spacing={4}>
@@ -187,6 +186,7 @@ function NewSurgery() {
                       name="social"
                       options={socials}
                       label="Obra social"
+                      freeSolo
                     />
                   </Grid>
                   <Grid item xs={12} sm={6}>
@@ -194,6 +194,7 @@ function NewSurgery() {
                       name="surgery"
                       options={surgeryTypes}
                       label="Cirugía"
+                      freeSolo
                     />
                   </Grid>
                   <Grid item xs={12} className={classes.buttons}>
@@ -201,8 +202,7 @@ function NewSurgery() {
                       disabled={isSubmitting}
                       variant="contained"
                       color="primary"
-                      type="submit"
-                    >
+                      type="submit">
                       Guardar
                     </Button>
                   </Grid>
