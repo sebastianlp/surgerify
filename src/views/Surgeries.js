@@ -1,48 +1,48 @@
-import React from "react";
-import dayjs from "dayjs";
+import React from 'react';
+import dayjs from 'dayjs';
 
-import { makeStyles } from "@material-ui/core/styles";
-import Grid from "@material-ui/core/Grid";
-import TableContainer from "@material-ui/core/TableContainer";
-import Paper from "@material-ui/core/Paper";
-import Button from "@material-ui/core/Button";
-import GetAppIcon from "@material-ui/icons/GetApp";
-import Table from "@material-ui/core/Table";
-import TableHead from "@material-ui/core/TableHead";
-import TableCell from "@material-ui/core/TableCell";
-import TableRow from "@material-ui/core/TableRow";
-import TableBody from "@material-ui/core/TableBody";
+import { makeStyles } from '@material-ui/core/styles';
+import Grid from '@material-ui/core/Grid';
+import TableContainer from '@material-ui/core/TableContainer';
+import Paper from '@material-ui/core/Paper';
+import Button from '@material-ui/core/Button';
+import GetAppIcon from '@material-ui/icons/GetApp';
+import Table from '@material-ui/core/Table';
+import TableHead from '@material-ui/core/TableHead';
+import TableCell from '@material-ui/core/TableCell';
+import TableRow from '@material-ui/core/TableRow';
+import TableBody from '@material-ui/core/TableBody';
 
-import MonthSelector from "components/MonthSelector";
+import MonthSelector from 'components/MonthSelector';
 
-import { useUser } from "context/UserContext";
-import { useSnackbar } from "context/SnackbarContext";
-import { useLoader } from "context/LoaderContext";
+import { useUser } from 'context/UserContext';
+import { useSnackbar } from 'context/SnackbarContext';
+import { useLoader } from 'context/LoaderContext';
 
-import { getSurgeriesByUserAndMonth } from "services/surgeries";
+import { getSurgeriesByUserAndMonth } from 'services/surgeries';
 
-import { generateAndDownloadFile, transformSurgery } from "domain/excel";
+import { generateAndDownloadFile, transformSurgery } from 'domain/excel';
 
 const useStyles = makeStyles(theme => ({
   paper: {
     padding: theme.spacing(2),
-    display: "flex",
-    overflow: "auto",
-    flexDirection: "column"
+    display: 'flex',
+    overflow: 'auto',
+    flexDirection: 'column',
   },
   paperActions: {
-    marginBottom: theme.spacing(1)
+    marginBottom: theme.spacing(1),
   },
   containerActions: {
-    display: "flex",
-    justifyContent: "flexEnd"
+    display: 'flex',
+    justifyContent: 'flexEnd',
   },
   tableContainer: {
-    maxHeight: 644
+    maxHeight: 644,
   },
   table: {
-    minWidth: 650
-  }
+    minWidth: 650,
+  },
 }));
 
 function Surgeries() {
@@ -65,8 +65,8 @@ function Surgeries() {
         .catch(error => {
           console.error(error);
           addSnackbar(
-            "Ops! Ocurrió un error obteniendo las cirugías! 😔",
-            "error"
+            'Ops! Ocurrió un error obteniendo las cirugías! 😔',
+            'error'
           );
         })
         .finally(() => showLoader(false));
@@ -100,14 +100,13 @@ function Surgeries() {
               startIcon={<GetAppIcon />}
               onClick={() => {
                 const today = new Date();
-                const month = today.toLocaleString("es-AR", { month: "long" });
+                const month = today.toLocaleString('es-AR', { month: 'long' });
 
                 return generateAndDownloadFile(
                   surgeries.map(transformSurgery),
                   `Cirugías ${month} ${today.getFullYear()}`
                 );
-              }}
-            >
+              }}>
               Exportar
             </Button>
           </Grid>
@@ -136,7 +135,7 @@ function Surgeries() {
                   <TableCell align="right">{surgery.affiliateName}</TableCell>
                   <TableCell align="right">{surgery.center}</TableCell>
                   <TableCell align="right">
-                    {dayjs(surgery.date.toDate()).format("DD/MM/YYYY")}
+                    {dayjs(surgery.date.toDate()).format('DD/MM/YYYY')}
                   </TableCell>
                   <TableCell align="right">{surgery.doctor}</TableCell>
                   <TableCell align="right">{surgery.social}</TableCell>

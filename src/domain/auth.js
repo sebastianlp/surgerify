@@ -1,4 +1,4 @@
-import firebase from "./firebase";
+import firebase from './firebase';
 
 /**
  * Promisified version of the onAuthStateChanged Firebase function
@@ -16,7 +16,7 @@ function getUser() {
 
       firebase
         .firestore()
-        .collection("users")
+        .collection('users')
         .doc(user.uid)
         .get()
         .then(documentSnapshot => {
@@ -26,8 +26,8 @@ function getUser() {
             user: {
               displayName: userProfile.displayName,
               email: user.email,
-              uid: user.uid
-            }
+              uid: user.uid,
+            },
           });
         })
         .catch(e => {

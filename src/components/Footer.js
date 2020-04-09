@@ -1,15 +1,15 @@
-import React from "react";
+import React from 'react';
 
-import { makeStyles } from "@material-ui/core/styles";
-import Container from "@material-ui/core/Container";
+import { makeStyles } from '@material-ui/core/styles';
+import Container from '@material-ui/core/Container';
 
-import Copyright from "./Copyright";
+import Copyright from './Copyright';
 
 const useStyles = makeStyles(theme => ({
   footer: {
     padding: theme.spacing(3, 2),
-    marginTop: "auto"
-  }
+    marginTop: 'auto',
+  },
 }));
 
 function Footer() {

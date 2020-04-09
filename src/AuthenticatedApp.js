@@ -1,15 +1,15 @@
-import React from "react";
+import React from 'react';
 import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Redirect
-} from "react-router-dom";
+  Redirect,
+} from 'react-router-dom';
 
-import Layout from "components/Layout";
+import Layout from 'components/Layout';
 
-import Surgeries from "views/Surgeries";
-import NewSurgery from "views/NewSurgery";
+import Surgeries from 'views/Surgeries';
+import NewSurgery from 'views/NewSurgery';
 
 function AuthenticatedApp() {
   return (

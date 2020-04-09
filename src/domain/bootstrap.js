@@ -1,4 +1,4 @@
-import { getUser } from "./auth";
+import { getUser } from './auth';
 
 /**
  * This function bootstrap the application initial data
@@ -9,14 +9,14 @@ async function bootstrapApplicationData() {
 
   if (!data) {
     return {
-      user: null
+      user: null,
     };
   }
 
   const { user } = data;
 
   return {
-    user
+    user,
   };
 }
 
