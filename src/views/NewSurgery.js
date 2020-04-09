@@ -179,6 +179,7 @@ function NewSurgery() {
                       name="doctor"
                       options={doctors}
                       label="Cirujano"
+                      freeSolo
                     />
                   </Grid>
                   <Grid item xs={12} sm={6}>
