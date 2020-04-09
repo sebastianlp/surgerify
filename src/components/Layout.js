@@ -1,28 +1,28 @@
-import React from "react";
+import React from 'react';
 
-import { makeStyles } from "@material-ui/core/styles";
-import Container from "@material-ui/core/Container";
+import { makeStyles } from '@material-ui/core/styles';
+import Container from '@material-ui/core/Container';
 
-import Header from "./Header";
-import Sidebar from "./Sidebar";
+import Header from './Header';
+import Sidebar from './Sidebar';
 
 const useStyles = makeStyles(theme => ({
   root: {
-    display: "flex"
+    display: 'flex',
   },
   appBarSpacer: {
     ...theme.mixins.toolbar,
-    marginBottom: theme.spacing(2)
+    marginBottom: theme.spacing(2),
   },
   main: {
     flexGrow: 1,
-    height: "100vh",
-    overflow: "auto"
+    height: '100vh',
+    overflow: 'auto',
   },
   container: {
     paddingTop: theme.spacing(4),
-    paddingBottom: theme.spacing(4)
-  }
+    paddingBottom: theme.spacing(4),
+  },
 }));
 
 export default function Layout(props) {

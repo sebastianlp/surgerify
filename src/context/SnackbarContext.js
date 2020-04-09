@@ -1,21 +1,21 @@
-import React from "react";
-import Snackbar from "components/Snackbar";
+import React from 'react';
+import Snackbar from 'components/Snackbar';
 
 const SnackbarContext = React.createContext();
 
 const SNACKBAR_TTL = 3500;
 
 const initialState = {
-  message: "",
-  severity: "",
+  message: '',
+  severity: '',
   show: false,
-  ttl: SNACKBAR_TTL
+  ttl: SNACKBAR_TTL,
 };
 
 const snackbarReducer = function(state, snackbar) {
   return {
     ...state,
-    ...snackbar
+    ...snackbar,
   };
 };
 
@@ -41,7 +41,7 @@ function SnackbarProvider(props) {
         key: Date.now(),
         show: true,
         message,
-        severity
+        severity,
       }),
     []
   );

@@ -1,19 +1,19 @@
-import React from "react";
+import React from 'react';
 
-import { makeStyles } from "@material-ui/core/styles";
-import FormControl from "@material-ui/core/FormControl";
-import InputLabel from "@material-ui/core/InputLabel";
-import Select from "@material-ui/core/Select";
-import MenuItem from "@material-ui/core/MenuItem";
+import { makeStyles } from '@material-ui/core/styles';
+import FormControl from '@material-ui/core/FormControl';
+import InputLabel from '@material-ui/core/InputLabel';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
 
 const useStyles = makeStyles(theme => ({
   formControl: {
     margin: theme.spacing(1),
-    minWidth: 120
+    minWidth: 120,
   },
   selectEmpty: {
-    marginTop: theme.spacing(2)
-  }
+    marginTop: theme.spacing(2),
+  },
 }));
 
 function MonthSelector(props) {
@@ -35,14 +35,12 @@ function MonthSelector(props) {
         id="month-select"
         value={props.selectedMonth}
         onChange={props.onMonthChange}
-        labelWidth={labelWidth}
-      >
+        labelWidth={labelWidth}>
         {generateMonths(props.selectedMonth).map(month => (
           <MenuItem
             key={month.key}
             value={month.monthValue}
-            disabled={month.disabled}
-          >
+            disabled={month.disabled}>
             {month.monthName}
           </MenuItem>
         ))}
@@ -59,9 +57,9 @@ function generateMonths(selectedMonth) {
     const monthDate = new Date(today.getFullYear(), x, today.getDate());
     months.push({
       key: x,
-      monthName: monthDate.toLocaleString("es-AR", { month: "long" }),
+      monthName: monthDate.toLocaleString('es-AR', { month: 'long' }),
       monthValue: x,
-      disabled: x > today.getMonth()
+      disabled: x > today.getMonth(),
     });
   }
 

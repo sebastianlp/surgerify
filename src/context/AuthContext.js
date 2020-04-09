@@ -1,8 +1,8 @@
-import React from "react";
-import { useAsync } from "react-async";
-import * as auth from "domain/auth";
-import { bootstrapApplicationData } from "domain/bootstrap";
-import FullPageLoader from "components/FullPageLoader";
+import React from 'react';
+import { useAsync } from 'react-async';
+import * as auth from 'domain/auth';
+import { bootstrapApplicationData } from 'domain/bootstrap';
+import FullPageLoader from 'components/FullPageLoader';
 
 const AuthContext = React.createContext();
 
@@ -14,9 +14,9 @@ function AuthProvider(props) {
     isRejected,
     isPending,
     isSettled,
-    reload
+    reload,
   } = useAsync({
-    promiseFn: bootstrapApplicationData
+    promiseFn: bootstrapApplicationData,
   });
 
   React.useLayoutEffect(() => {

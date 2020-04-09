@@ -1,47 +1,47 @@
-import React from "react";
+import React from 'react';
 
-import Container from "@material-ui/core/Container";
-import Box from "@material-ui/core/Box";
-import Avatar from "@material-ui/core/Avatar";
-import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
-import Typography from "@material-ui/core/Typography";
-import Button from "@material-ui/core/Button";
-import TextField from "@material-ui/core/TextField";
-import { makeStyles } from "@material-ui/core/styles";
+import Container from '@material-ui/core/Container';
+import Box from '@material-ui/core/Box';
+import Avatar from '@material-ui/core/Avatar';
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
+import { makeStyles } from '@material-ui/core/styles';
 
-import { Formik, Form, Field } from "formik";
-import * as Yup from "yup";
+import { Formik, Form, Field } from 'formik';
+import * as Yup from 'yup';
 
-import { useAuth } from "context/AuthContext";
-import { useLoader } from "context/LoaderContext";
-import { useSnackbar } from "context/SnackbarContext";
+import { useAuth } from 'context/AuthContext';
+import { useLoader } from 'context/LoaderContext';
+import { useSnackbar } from 'context/SnackbarContext';
 
-import Footer from "components/Footer";
+import Footer from 'components/Footer';
 
 const useStyles = makeStyles(theme => ({
   mainContainer: {
-    display: "flex",
-    flexDirection: "column",
-    minHeight: "100vh"
+    display: 'flex',
+    flexDirection: 'column',
+    minHeight: '100vh',
   },
   box: {
-    marginTop: theme.spacing(8)
+    marginTop: theme.spacing(8),
   },
   avatar: {
     margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main
+    backgroundColor: theme.palette.secondary.main,
   },
   form: {
-    width: "100%", // Fix IE 11 issue.
-    marginTop: theme.spacing(1)
+    width: '100%', // Fix IE 11 issue.
+    marginTop: theme.spacing(1),
   },
   submit: {
-    margin: theme.spacing(3, 0, 2)
+    margin: theme.spacing(3, 0, 2),
   },
   apiError: {
     color: theme.palette.error.main,
-    textAlign: "center"
-  }
+    textAlign: 'center',
+  },
 }));
 
 function UnauthenticatedApp() {
@@ -59,7 +59,7 @@ function UnauthenticatedApp() {
       .catch(e => {
         showLoader(false);
         console.error(e);
-        addSnackbar("Ops! Ocurrió un error! 😔", "error");
+        addSnackbar('Ops! Ocurrió un error! 😔', 'error');
         throw e;
       });
   }
@@ -70,8 +70,7 @@ function UnauthenticatedApp() {
         className={classes.box}
         flexDirection="column"
         display="flex"
-        alignItems="center"
-      >
+        alignItems="center">
         <Avatar className={classes.avatar}>
           <LockOutlinedIcon />
         </Avatar>
@@ -87,9 +86,9 @@ function UnauthenticatedApp() {
 
 const SignupSchema = Yup.object().shape({
   email: Yup.string()
-    .email("El email es incorrecto")
-    .required("El email es requerido"),
-  password: Yup.string().required("Ops! La contraseña es requerida")
+    .email('El email es incorrecto')
+    .required('El email es requerido'),
+  password: Yup.string().required('Ops! La contraseña es requerida'),
 });
 
 function LoginForm({ onSubmit }) {
@@ -97,14 +96,13 @@ function LoginForm({ onSubmit }) {
 
   return (
     <Formik
-      initialValues={{ email: "", password: "" }}
+      initialValues={{ email: '', password: '' }}
       validationSchema={SignupSchema}
       onSubmit={(values, { setSubmitting }) => {
         onSubmit(values).catch(e => {
           setSubmitting(false);
         });
-      }}
-    >
+      }}>
       {({ isSubmitting }) => (
         <Form className={classes.form}>
           <Field name="email">
@@ -142,8 +140,7 @@ function LoginForm({ onSubmit }) {
             fullWidth
             className={classes.submit}
             color="primary"
-            disabled={isSubmitting}
-          >
+            disabled={isSubmitting}>
             Ingresar
           </Button>
         </Form>

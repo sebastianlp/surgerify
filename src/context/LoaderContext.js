@@ -1,5 +1,5 @@
-import React from "react";
-import FullPageLoader from "components/FullPageLoader";
+import React from 'react';
+import FullPageLoader from 'components/FullPageLoader';
 
 const LoaderContext = React.createContext();
 

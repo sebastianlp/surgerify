@@ -1,16 +1,16 @@
-import firebaseApp, { getAllFromCollection, firebase } from "domain/firebase";
+import firebaseApp, { getAllFromCollection, firebase } from 'domain/firebase';
 
 /**
  * Get realtime updates on surgeries collection by userId
  * @param {string} userId
  */
 async function getSurgeriesByUserId(userId) {
-  const snapshot = await getAllFromCollection("surgeries", [
+  const snapshot = await getAllFromCollection('surgeries', [
     {
-      field: "userId",
-      operation: "==",
-      value: userId
-    }
+      field: 'userId',
+      operation: '==',
+      value: userId,
+    },
   ]);
 
   return snapshot.docs.map(surgeryTransformer);
@@ -19,7 +19,7 @@ async function getSurgeriesByUserId(userId) {
 function surgeryTransformer(surgery) {
   return {
     ...surgery.data(),
-    id: surgery.id
+    id: surgery.id,
   };
 }
 
@@ -30,13 +30,13 @@ async function getSurgeriesByUserAndMonth(userId, month) {
 
   const userSnapshot = await firebaseApp
     .firestore()
-    .collection("users")
+    .collection('users')
     .doc(userId)
     .get();
 
   const surgeriesSnapshot = await userSnapshot.ref
-    .collection("surgeries")
-    .orderBy("date")
+    .collection('surgeries')
+    .orderBy('date')
     .startAt(startAt)
     .endAt(endAt)
     .get();
@@ -59,13 +59,13 @@ async function getSurgeriesByUserAndMonth(userId, month) {
 async function newSurgery(surgery) {
   return firebaseApp
     .firestore()
-    .collection("users")
+    .collection('users')
     .doc(surgery.userId)
-    .collection("surgeries")
+    .collection('surgeries')
     .add({
       ...surgery,
       createdAt: firebase.firestore.Timestamp.now(),
-      date: firebase.firestore.Timestamp.fromDate(surgery.date)
+      date: firebase.firestore.Timestamp.fromDate(surgery.date),
     });
 }
 
